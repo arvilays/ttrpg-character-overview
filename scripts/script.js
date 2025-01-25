@@ -7,7 +7,8 @@ const classElement = document.querySelector(".character-class");
 const levelElement = document.querySelector(".character-level");
 const arrowLeft = document.querySelector(".arrow-left");
 const arrowRight = document.querySelector(".arrow-right");
-const toggleAllFeats = document.querySelector("#toggle-all-feats");
+const toggleAllFeats = document.querySelector("#show-all-feats");
+const togglePassives = document.querySelector("#show-passives");
 const featContainer = document.querySelector(".feat-container");
 
 const strengthValue = document.querySelector(".strength-value");
@@ -84,6 +85,10 @@ toggleAllFeats.addEventListener("click", () => {
     generateLevelFeats();
 });
 
+togglePassives.addEventListener("click", () => {
+    generateLevelFeats();
+});
+
 const generateLevelFeats = () => {
     featContainer.textContent = "";
 
@@ -92,6 +97,10 @@ const generateLevelFeats = () => {
         levelFeats = characterFeats.filter(item => item["level_acquired"] <= Number(levelElement.textContent)).reverse();
     } else {
         levelFeats = characterFeats.filter(item => item["level_acquired"] == Number(levelElement.textContent));
+    }
+
+    if (!togglePassives.checked) {
+        levelFeats = levelFeats.filter(item => item["action"] != "passive");
     }
 
     levelFeats.forEach(item => {
