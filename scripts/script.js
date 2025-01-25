@@ -10,8 +10,40 @@ const arrowRight = document.querySelector(".arrow-right");
 const toggleAllFeats = document.querySelector("#toggle-all-feats");
 const featContainer = document.querySelector(".feat-container");
 
+const strengthValue = document.querySelector(".strength-value");
+const dexterityValue = document.querySelector(".dexterity-value");
+const constitutionValue = document.querySelector(".constitution-value");
+const intelligenceValue = document.querySelector(".intelligence-value");
+const wisdomValue = document.querySelector(".wisdom-value");
+const charismaValue = document.querySelector(".charisma-value");
+
+const acrobaticsIcon = document.querySelector(".acrobatics");
+const arcanaIcon = document.querySelector(".arcana");
+const athleticsIcon = document.querySelector(".athletics");
+const craftingIcon = document.querySelector(".crafting");
+const deceptionIcon = document.querySelector(".deception");
+const diplomacyIcon = document.querySelector(".diplomacy");
+const intimidationIcon = document.querySelector(".intimidation");
+const medicineIcon = document.querySelector(".medicine");
+const natureIcon = document.querySelector(".nature");
+const occultismIcon = document.querySelector(".occultism");
+const performanceIcon = document.querySelector(".performance");
+const religionIcon = document.querySelector(".religion");
+const societyIcon = document.querySelector(".society");
+const stealthIcon = document.querySelector(".stealth");
+const survivalIcon = document.querySelector(".survival");
+const thieveryIcon = document.querySelector(".thievery");
+
+const untrainedColor = "invert(4%) sepia(96%) saturate(18%) hue-rotate(283deg) brightness(105%) contrast(102%)"; // #FFFFFF
+const trainedColor = "invert(92%) sepia(93%) saturate(2382%) hue-rotate(230deg) brightness(250%) contrast(101%)"; // #171f69
+const expertColor = "invert(91%) sepia(42%) saturate(5899%) hue-rotate(273deg) brightness(200%) contrast(123%)"; // #3a005c
+const masterColor = "invert(78%) sepia(81%) saturate(1206%) hue-rotate(23deg) brightness(200%) contrast(101%)"; // #664400
+const legendaryColor = "invert(93%) sepia(81%) saturate(3421%) hue-rotate(356deg) brightness(200%) contrast(115%)"; // #5c0000
+
 const MIN_LEVEL = 0;
 const MAX_LEVEL = 20;
+
+const currentLevel = localStorage['currentLevel'] || 1;
 
 const main = () => {
     characterImage.src = characterImageURL;
@@ -21,14 +53,20 @@ const main = () => {
     ancestryElement.textContent = characterAncestry;
     backgroundElement.textContent = characterBackground;
     classElement.textContent = characterClass;
+    levelElement.textContent = currentLevel;
 
     generateLevelFeats();
+    generateAbilityValues();
+    generateSkillValues();
 }
 
 arrowLeft.addEventListener("click", () => {
     if (Number(levelElement.textContent) > MIN_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) - 1;
         generateLevelFeats();
+        generateAbilityValues();
+        generateSkillValues();
+        localStorage['currentLevel'] = levelElement.textContent;
     }
 });
 
@@ -36,6 +74,9 @@ arrowRight.addEventListener("click", () => {
     if (Number(levelElement.textContent) < MAX_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) + 1;
         generateLevelFeats();
+        generateAbilityValues();
+        generateSkillValues();
+        localStorage['currentLevel'] = levelElement.textContent;
     }
 });
 
@@ -65,11 +106,13 @@ const generateFeat = item => {
     let feat_image = document.createElement("div");
     feat_image.className = "feat-image";
     let feat_image_img = document.createElement("img");
-    let icon_url = item["icon-url"];
-    if (icon_url == undefined) {
+    let icon_url = item["icon_url"];
+    if (icon_url == "") {
         feat_image_img.src = "./images/blank.svg"; 
     } else {
-        feat_image_img.src = item["icon-url"]; 
+        feat_image_img.src = item["icon_url"];
+        feat_image_img.style.border = "4px double black";
+        feat_image_img.style.borderRadius = "20px";
     }
     feat_image.appendChild(feat_image_img);
 
@@ -123,15 +166,116 @@ const generateFeat = item => {
     featContainer.appendChild(feat);
 };
 
-main();
+const generateAbilityValues = () => {
+    let strengthSum = 0;
+    let dexteritySum = 0;
+    let constitutionSum = 0;
+    let intelligenceSum = 0;
+    let wisdomSum = 0;
+    let charismaSum = 0;
+    for (let i = 0; i <= Number(levelElement.textContent); i++) {
+        strengthSum += characterStats[0]["strength"][i];
+        dexteritySum += characterStats[0]["dexterity"][i];
+        constitutionSum += characterStats[0]["constitution"][i];
+        intelligenceSum += characterStats[0]["intelligence"][i];
+        wisdomSum += characterStats[0]["wisdom"][i];
+        charismaSum += characterStats[0]["charisma"][i];
+    }
+    
+    updateAbilityValue(strengthSum, strengthValue, "strength");
+    updateAbilityValue(dexteritySum, dexterityValue, "dexterity");
+    updateAbilityValue(constitutionSum, constitutionValue, "constitution");
+    updateAbilityValue(intelligenceSum, intelligenceValue, "intelligence");
+    updateAbilityValue(wisdomSum, wisdomValue, "wisdom");
+    updateAbilityValue(charismaSum, charismaValue, "charisma");
+}
 
-/*
-<div class="feat">
-    <div class="feat-image"><img src="./images/blank.svg"></div>
-    <div class="feat-title">
-        <div class="feat-name"><a href="">Nimble Dodge</a></div>
-        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
-    </div>
-    <div class="feat-description">When attacked and can see target, +2 AC.</div>
-</div>
-*/
+const updateAbilityValue = (sum, element, name) => {
+    if (sum > 0) element.textContent = "+" + sum;
+    else element.textContent = sum;
+    if (element.textContent.endsWith(".5")) element.textContent = element.textContent.slice(0, -2) + "⇑";
+    if (characterStats[0][name][Number(levelElement.textContent)] != 0) element.style.color = "lightgreen";
+    else element.style.color = "white";
+}
+
+const generateSkillValues = () => {
+    let acrobaticsSum = 0;
+    let arcanaSum = 0;
+    let athleticsSum = 0;
+    let craftingSum = 0;
+    let deceptionSum = 0;
+    let diplomacySum = 0;
+    let intimidationSum = 0;
+    let medicineSum = 0;
+    let natureSum = 0;
+    let occultismSum = 0;
+    let performanceSum = 0;
+    let religionSum = 0;
+    let societySum = 0;
+    let stealthSum = 0;
+    let survivalSum = 0;
+    let thieverySum = 0;
+    for (let i = 0; i <= Number(levelElement.textContent); i++) {
+        acrobaticsSum += characterStats[1]["acrobatics"][i];
+        arcanaSum += characterStats[1]["arcana"][i];
+        athleticsSum += characterStats[1]["athletics"][i];
+        craftingSum += characterStats[1]["crafting"][i];
+        deceptionSum += characterStats[1]["deception"][i];
+        diplomacySum += characterStats[1]["diplomacy"][i];
+        intimidationSum += characterStats[1]["intimidation"][i];
+        medicineSum += characterStats[1]["medicine"][i];
+        natureSum += characterStats[1]["nature"][i];
+        occultismSum += characterStats[1]["occultism"][i];
+        performanceSum += characterStats[1]["performance"][i];
+        religionSum += characterStats[1]["religion"][i];
+        societySum += characterStats[1]["society"][i];
+        stealthSum += characterStats[1]["stealth"][i];
+        survivalSum += characterStats[1]["survival"][i];
+        thieverySum += characterStats[1]["thievery"][i];
+    }
+
+    updateSkillValue(acrobaticsSum, acrobaticsIcon, "acrobatics");
+    updateSkillValue(arcanaSum, arcanaIcon, "arcana");
+    updateSkillValue(athleticsSum, athleticsIcon, "athletics");
+    updateSkillValue(craftingSum, craftingIcon, "crafting");
+    updateSkillValue(deceptionSum, deceptionIcon, "deception");
+    updateSkillValue(diplomacySum, diplomacyIcon, "diplomacy");
+    updateSkillValue(intimidationSum, intimidationIcon, "intimidation");
+    updateSkillValue(medicineSum, medicineIcon, "medicine");
+    updateSkillValue(natureSum, natureIcon, "nature");
+    updateSkillValue(occultismSum, occultismIcon, "occultism");
+    updateSkillValue(performanceSum, performanceIcon, "performance");
+    updateSkillValue(religionSum, religionIcon, "religion");
+    updateSkillValue(societySum, societyIcon, "society");
+    updateSkillValue(stealthSum, stealthIcon, "stealth");
+    updateSkillValue(survivalSum, survivalIcon, "survival");
+    updateSkillValue(thieverySum, thieveryIcon, "thievery");
+}
+
+const updateSkillValue = (sum, element, name) => {
+    if (sum == 0) {
+        element.style.filter = untrainedColor;
+        element.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Untrained)";
+    } else if (sum == 1) {
+        element.style.filter = trainedColor;
+        element.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Trained)";
+    } else if (sum == 2) {
+        element.style.filter = expertColor;
+        element.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Expert)";
+    } else if (sum == 3) {
+        element.style.filter = masterColor;
+        element.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Master)";
+    } else if (sum == 4) {
+        element.style.filter = legendaryColor;
+        element.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Legendary)";
+    }
+
+    let oldFilter = element.style.filter;
+    if (characterStats[1][name][Number(levelElement.textContent)] > 0) {
+        element.style.filter = oldFilter + " drop-shadow(0 0 10px rgb(255, 255, 255))";
+    } else {
+        element.style.filter = oldFilter;
+    }
+}
+
+main();

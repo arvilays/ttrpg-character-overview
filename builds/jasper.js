@@ -8,7 +8,8 @@ const characterImageURL = "./images/jasper.webp";
 const characterBackgroundImageURL = "./images/fantasy-background.png";
 
 // Stat changes ordered from level 0 to 20.
-const characterStats = [      //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+const characterStats = [     
+                     //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
     {   strength:     [0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1], 
         dexterity:    [0,  4,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5], 
         constitution: [0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0], 
@@ -55,7 +56,7 @@ const characterFeats = [
         level_acquired: 0,
         manually_chosen: false, 
         description: "Before you can use Aid, spend an action preparing to help an ally by stating how you'll do it. Once the condition is met, roll relevant check. If critical success, grant +2 to ally's check (+3 if you are a master at check, +4 if legendary). If success, grant +1 to ally's check. If critical failure, grant -1 to ally's check.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/aid.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2292&Redirected=1" },
     
     { name: "Recall Knowledge",
@@ -66,7 +67,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "Ask a question and the DM will choose a skill check. If critical success, the GM answers truthfully and provides additional information. If success, the GM answers truthfully. On critical failure, the GM answers falsely or gives no answer.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/recall-knowledge.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2367" },
     
     { name: "Step",
@@ -77,7 +78,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "Move 5ft without triggering reactions.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/step.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2304" },
 
     { name: "Take Cover",
@@ -88,7 +89,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "Press yourself against a wall or obstacle. Standard cover turns into greater cover (+4 AC). No cover turns into standard cover (+2 AC).", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/take-cover.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2307" },
 
     { name: "Feint",
@@ -99,7 +100,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "If you are within melee reach of a target, attempt a Deception check against your target's Perception DC. If critical success, target is off-guard to your melee attacks until the end of your next turn. If success, target is off-guard to your next melee attack before the end of your turn. If critical failure, you are off-guard against the target's melee attacks until the end of your next turn.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/feint.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2390" },
 
     { name: "Grapple",
@@ -110,7 +111,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "With one hand free and target is no more than 1 size larger than you, attempt an Athletics check against the target's Fortitude DC. On critical success, target is restrained until the end of your turn unless your move. On success, target is grabbed until the end of your turn unless you move. On failure, you fail to grab your target and all grabbing conditions end. On critical failure, the target can grab you or force you to go prone.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/grapple.png",
         source_url: "https://2e.aonprd.com/Traits.aspx?ID=619" },
 
     { name: "Reposition", 
@@ -121,7 +122,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "If you have one hand free, attempt an Athletics check against the target's Fortitude DC. On critical success, move the target up to 10ft within reach. On success, move the target up to 5ft within reach. On critical failure, the target can move you up to 5ft.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/reposition.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2379" },
 
     { name: "Shove", 
@@ -132,7 +133,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "If you have one hand free and target is no more than 1 size larger than you, attempt an Athletics check against your target's Fortitude DC. On critical success, push target up to 10ft away from you and you can Stride after it. On success, push target up to 5ft and you can Stride after it. On critical failure, you fall prone.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/shove.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2380" },
 
     { name: "Disarm", 
@@ -143,7 +144,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "With one hand free, attempt an Athletics check against a target's Reflex DC. On critical success, the target's weapon falls to the ground. On success, add +2 bonus to future Disarms and the target takes -2 penalty to attacks with the item. The target can change their grip to reset bonuses and penalties. On critical failure, you become off-guard.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/disarm.webp",
         source_url: "https://2e.aonprd.com/Traits.aspx?ID=577" },
 
     { name: "Trip", 
@@ -154,7 +155,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "If you have one hand free and the target is no more than 1 size larger than you, attempt an Athletics check against the target's Reflex DC. If critical success, the target falls prone and takes 1d6 bludgeoning damage. If success, target falls prone. If critical failure, you fall prone.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/trip.gif",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2382" },
 
     { name: "Tumble Through", 
@@ -165,7 +166,7 @@ const characterFeats = [
         level_acquired: 0, 
         manually_chosen: false, 
         description: "Attempt to move through the space of one enemy by attempting an Acrobatics Check against the enemy's Reflex DC. If success, you move through the enemy's space, treating the squares as difficult terrain.", 
-        icon_url: "",
+        icon_url: "./images/feat-icons/tumble-through.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2370" },
 
     { name: "Demoralize", 
@@ -175,8 +176,8 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "Attempt an Intimidation check against an enemy's Will DC. -4 penalty if language barrier. On critical success, target becomes frightened 2. On success, target becomes frightened 1. Target is immune to your Demoralize for 10min.", 
-        icon_url: "",
+        description: "Attempt an Intimidation check against an enemy's Will DC. -4 penalty if there's a language barrier. On critical success, target becomes frightened 2. On success, target becomes frightened 1. Target is immune to your Demoralize for 10min.", 
+        icon_url: "./images/feat-icons/demoralize.png",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2395" },
 
 
@@ -192,8 +193,8 @@ const characterFeats = [
         level: 1,
         level_acquired: 1,
         manually_chosen: true, 
-        description: "When attacked and can see target, +2 AC.",
-        icon_url: "",
+        description: "When you are attacked and can see the target, you gain +2 AC.",
+        icon_url: "./images/feat-icons/nimble-dodge.png",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=4916" },
 
     { name: "Sneak Attack",
@@ -204,7 +205,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: false, 
         description: "Deal an extra 1d6 precision damage to off-guard enemies (increases # of dice at level 5, 11, and 17).",
-        icon_url: "",
+        icon_url: "./images/feat-icons/sneak-attack.webp",
         source_url: "https://2e.aonprd.com/Classes.aspx?ID=37" },
 
     { name: "Surprise Attack",
@@ -215,7 +216,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: false, 
         description: "If rolled Stealth or Deception for initiative, all enemies that move after you are off-guard to you during the first round.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/surprise-attack.webp",
         source_url: "https://2e.aonprd.com/Classes.aspx?ID=37" },
     
     { name: "Deep Rat",
@@ -226,7 +227,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: true, 
         description: "Gain darkvision.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/deep-rat.png",
         source_url: "https://2e.aonprd.com/Heritages.aspx?ID=347" },
 
     { name: "Tinkering Fingers",
@@ -237,7 +238,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: true, 
         description: "Repair items without penalties. +1 bonus when using a repair toolkit.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/tinkering-fingers.webp",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=5656" },
 
     { name: "Steady Balance",
@@ -248,7 +249,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: false, 
         description: "When balancing, successes = critical successes. Prevents being off-guard from narrow and uneven surfaces.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/steady-balance.png",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=5217" },
 
     { name: "Assurance (Athletics)",
@@ -259,7 +260,7 @@ const characterFeats = [
         level_acquired: 1,
         manually_chosen: true, 
         description: "Instead of rolling dice, apply 10 + your proficiency bonus to an Athletics skill check.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/assurance.png",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=5121" },
 
 
@@ -276,7 +277,7 @@ const characterFeats = [
         level_acquired: 2,
         manually_chosen: true, 
         description: "Sneak to an enemy adjacent to an ally. Roll stealth check. If success, melee Strike that enemy.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/underhanded-assault.png",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=4929" },
 
     { name: "Acrobat Dedication",
@@ -287,7 +288,7 @@ const characterFeats = [
         level_acquired: 2,
         manually_chosen: true, 
         description: "Gain the Acrobat archetype. If Tumble Through critically succeeds, ignore difficult terrain.",
-        icon_url: "",
+        icon_url: "./images/feat-icons/acrobat-dedication.png",
         source_url: "https://2e.aonprd.com/Archetypes.aspx?ID=236" },
     
     { name: "Pickpocket",
@@ -298,7 +299,7 @@ const characterFeats = [
         level_acquired: 2,
         manually_chosen: true, 
         description: "Steal items without a -5 penalty. If master in Thievery, you can Steal in combat (2 actions, -5 penalty).",
-        icon_url: "",
+        icon_url: "./images/feat-icons/steal.webp",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=5187" },
 
 

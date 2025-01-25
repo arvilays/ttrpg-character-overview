@@ -1,2 +1,2 @@
-# character-sheet
-character sheet reference website for ttrpg games.
+# ttrpg-character-overview
+website for viewing a TTRPG character build.
