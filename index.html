@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./css/style.css" rel="stylesheet">
+    <script src="./builds/jasper.js" defer></script>
     <script src="./scripts/script.js" defer></script>
-    <title>Character Sheet</title>
+    <title>TTRPG Character Viewer - Jasper</title>
 </head>
 <body>
     <div class="container">
@@ -46,7 +47,13 @@
         </div>
 
         <div class="main">
-            <div class="character-name">JASPER</div>
+            <div class="character-classes">
+                <div class="character-ancestry">Ratfolk</div>
+                <div class="character-background">Acrobat</div>
+                <div class="character-class">Rogue (Thief)</div>
+            </div>
+
+            <div class="character-name"><a id="name" href="" target="_blank">JASPER</a></div>
 
             <div class="arrows">
                 <div class="arrow-left arrow"><img src="./images/chevron-left.svg"></div>
@@ -55,41 +62,64 @@
 
             <div class="character-level">1</div>
 
-            <div class="level-container" id="1">
+            <div class="toggle-all-feats">
+                <input id="toggle-all-feats" type="checkbox" checked="checked">
+                <div>Toggle Previous Feats?</div>
+            </div>
+
+            <div class="feat-container">
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
 
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
 
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
 
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
 
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
 
                 <div class="feat">
-                    <div class="feat-image"></div>
-                    <div class="feat-title">Nimble Dodge</div>
-                    <div class="feat-description"></div>
+                    <div class="feat-image"><img src="./images/blank.svg"></div>
+                    <div class="feat-title">
+                        <div class="feat-name"><a href="">Nimble Dodge</a></div>
+                        <div class="feat-action"><img src="./images/pathfinder-icons/reaction.png"></div>
+                    </div>
+                    <div class="feat-description">When attacked and can see target, +2 AC.</div>
                 </div>
             </div>
         </div>
