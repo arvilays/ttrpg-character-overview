@@ -1,3 +1,5 @@
+const characterImage = document.querySelector("#character-image");
+const header = document.querySelector(".header");
 const nameElement = document.querySelector("#name");
 const ancestryElement = document.querySelector(".character-ancestry");
 const backgroundElement = document.querySelector(".character-background");
@@ -12,6 +14,8 @@ const MIN_LEVEL = 0;
 const MAX_LEVEL = 20;
 
 const main = () => {
+    characterImage.src = characterImageURL;
+    header.style.backgroundImage = "url(" + characterBackgroundImageURL + ")";
     nameElement.textContent = characterName.toUpperCase();
     nameElement.href = pathbuilderURL;
     ancestryElement.textContent = characterAncestry;

@@ -2,7 +2,10 @@ const characterName = "Jasper";
 const characterAncestry = "Ratfolk";
 const characterBackground = "Acrobat";
 const characterClass = "Rogue (Thief)";
+
 const pathbuilderURL = "https://pathbuilder2e.com/launch.html?build=1005091";
+const characterImageURL = "./images/jasper.webp";
+const characterBackgroundImageURL = "./images/fantasy-background.png";
 
 // Stat changes ordered from level 0 to 20.
 const characterStats = [      //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
