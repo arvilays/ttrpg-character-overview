@@ -57,7 +57,7 @@ const main = () => {
     ancestryElement.textContent = characterAncestry;
     backgroundElement.textContent = characterBackground;
     classElement.textContent = characterClass;
-    
+
     nameElement.textContent = characterName.toUpperCase();
     nameElement.href = pathbuilderURL;
     
@@ -68,6 +68,9 @@ const main = () => {
     generateSkillValues();
 }
 
+/*##############################
+||      EVENT LISTENERS       ||
+##############################*/
 arrowLeft.addEventListener("click", () => {
     if (Number(levelElement.textContent) > MIN_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) - 1;
@@ -96,6 +99,15 @@ togglePassives.addEventListener("click", () => {
     generateLevelFeats();
 });
 
+// Keyboard Controls
+document.addEventListener("keyup", e => {
+    if (e.key == "ArrowLeft") arrowLeft.click();
+    else if (e.key == "ArrowRight") arrowRight.click();
+});
+
+/*##############################
+||         FUNCTIONS          ||
+##############################*/
 const generateLevelFeats = () => {
     featContainer.textContent = "";
 
@@ -329,10 +341,5 @@ const updateSkillValue = (sum, element, name) => {
         element.style.filter = oldFilter;
     }
 }
-
-document.addEventListener("keyup", e => {
-    if (e.key == "ArrowLeft") arrowLeft.click();
-    else if (e.key == "ArrowRight") arrowRight.click();
-});
 
 main();

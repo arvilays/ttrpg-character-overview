@@ -10,9 +10,6 @@ const headerBackgroundImageURL = "./images/fantasy-background.png";
 
 
 
-
-
-
 // Stat changes ordered from level 0 to 20.
 const characterStats = [     
                      //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
@@ -43,10 +40,9 @@ const characterStats = [
 
 
 
+/* 
+EXAMPLE TEMPLATE:
 
-
-
-/*
 { name: "",
     id: "",
     type: "", 
@@ -57,10 +53,11 @@ const characterStats = [
     description: "",
     icon_url: "",
     source_url: "" },
+
 */
 
-// Supported types: basic, skill, general, class, ancestry, archetype, background
-// Supported actions: passive, reaction, free, one, two, three
+// SUPPORTED TYPES: basic, skill, general, class, ancestry, archetype, background
+// SUPPORTED ACTIONS: passive, reaction, free, one, two, three
 const characterFeats = [
     // LEVEL 0
     { name: "Aid",
