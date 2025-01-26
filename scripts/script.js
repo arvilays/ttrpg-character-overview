@@ -1,12 +1,16 @@
-const characterImage = document.querySelector("#character-image");
 const header = document.querySelector(".header");
-const nameElement = document.querySelector("#name");
+const abilityContainer = document.querySelector(".ability-container");
+const skillContainer = document.querySelector(".skill-container");
+const characterImage = document.querySelector("#character-image");
+
 const ancestryElement = document.querySelector(".character-ancestry");
 const backgroundElement = document.querySelector(".character-background");
 const classElement = document.querySelector(".character-class");
+const nameElement = document.querySelector("#name");
 const levelElement = document.querySelector(".character-level");
 const arrowLeft = document.querySelector(".arrow-left");
 const arrowRight = document.querySelector(".arrow-right");
+
 const toggleAllFeats = document.querySelector("#show-all-feats");
 const togglePassives = document.querySelector("#show-passives");
 const featContainer = document.querySelector(".feat-container");
@@ -47,13 +51,16 @@ const MAX_LEVEL = 20;
 const currentLevel = localStorage['currentLevel'] || 1;
 
 const main = () => {
+    header.style.backgroundImage = "url(" + headerBackgroundImageURL + ")";
     characterImage.src = characterImageURL;
-    header.style.backgroundImage = "url(" + characterBackgroundImageURL + ")";
-    nameElement.textContent = characterName.toUpperCase();
-    nameElement.href = pathbuilderURL;
+
     ancestryElement.textContent = characterAncestry;
     backgroundElement.textContent = characterBackground;
     classElement.textContent = characterClass;
+    
+    nameElement.textContent = characterName.toUpperCase();
+    nameElement.href = pathbuilderURL;
+    
     levelElement.textContent = currentLevel;
 
     generateLevelFeats();

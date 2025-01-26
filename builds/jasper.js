@@ -5,7 +5,13 @@ const characterClass = "Rogue (Thief)";
 
 const pathbuilderURL = "https://pathbuilder2e.com/launch.html?build=1005091";
 const characterImageURL = "./images/jasper.webp";
-const characterBackgroundImageURL = "./images/fantasy-background.png";
+
+const headerBackgroundImageURL = "./images/fantasy-background.png";
+
+
+
+
+
 
 // Stat changes ordered from level 0 to 20.
 const characterStats = [     
@@ -35,6 +41,11 @@ const characterStats = [
         thievery:     [0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0] },
 ];
 
+
+
+
+
+
 /*
 { name: "",
     id: "",
@@ -47,6 +58,9 @@ const characterStats = [
     icon_url: "",
     source_url: "" },
 */
+
+// Supported types: basic, skill, general, class, ancestry, archetype, background
+// Supported actions: passive, reaction, free, one, two, three
 const characterFeats = [
     // LEVEL 0
     { name: "Aid",
