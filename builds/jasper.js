@@ -870,7 +870,7 @@ const characterFeats = [
         icon_url: "./images/feat-icons/fit-for-the-role.png",
         source_url: "./images/feat-source/fit-for-the-role.png" },
 
-    { name: "Illusory Disguise (7th-Rank)",
+    { name: "Illusory Disguise (7th)",
         id: "illusory-disguise-7",
         type: "archetype", 
         action: "two",
