@@ -399,7 +399,7 @@ const characterFeats = [
         level: 2,
         level_acquired: 4,
         manually_chosen: true, 
-        description: "Recover +5HP when someone uses Treat Wounds or Battle Medicine on you. Your Battle Medicine immunity is now 1 hour.",
+        description: "Recover an additional +5HP when someone uses Treat Wounds or Battle Medicine on you. Your Battle Medicine immunity is now 1 hour.",
         icon_url: "./images/feat-icons/godless-healing.webp",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=869" },
     
