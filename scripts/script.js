@@ -236,7 +236,7 @@ const generateAbilityValues = () => {
 }
 
 const updateAbilityValue = (sum, element, name) => {
-    if (sum > 0) element.textContent = "+" + sum;
+    if (sum >= 0) element.textContent = "+" + sum;
     else element.textContent = sum;
     if (element.textContent.endsWith(".5")) element.textContent = element.textContent.slice(0, -2) + "⇑";
     if (characterStats[0][name][Number(levelElement.textContent)] != 0) element.style.color = "lightgreen";
