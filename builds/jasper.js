@@ -594,7 +594,7 @@ const characterFeats = [
         level: 9,
         level_acquired: 9,
         manually_chosen: true, 
-        description: "Turn into a rat.",
+        description: "Turn into a tiny rat.",
         icon_url: "./images/feat-icons/rat-form.png",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=5666" },
     
