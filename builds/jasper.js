@@ -10,15 +10,21 @@ const headerBackgroundImageURL = "./images/fantasy-background.png";
 
 
 
-// Stat changes ordered from level 0 to 20.
+// Stat changes ordered from level 0 to 20, followed by stat icon image URL.
 const characterStats = [     
-                     //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
-    {   strength:     [0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1], 
-        dexterity:    [0,  4,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5], 
-        constitution: [0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0], 
-        intelligence: [0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1], 
-        wisdom:       [0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1], 
-        charisma:     [0,  3,  0,  0,  0,  1,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0,  0] },
+                      //0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+    {   strength:     [[0, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+                      "./images/ability-icons/strength.svg"], 
+        dexterity:    [[0,  4,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5], 
+                      "./images/ability-icons/dexterity.svg"],
+        constitution: [[0,  1,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0],
+                      "./images/ability-icons/constitution.svg"],
+        intelligence: [[0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1],
+                      "./images/ability-icons/intelligence.svg"],
+        wisdom:       [[0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1],
+                      "./images/ability-icons/wisdom.svg"],
+        charisma:     [[0,  3,  0,  0,  0,  1,  0,  0,  0,  0, .5,  0,  0,  0,  0, .5,  0,  0,  0,  0,  0],
+                      "./images/ability-icons/charisma.svg"] },
 
     {   acrobatics:   [0,  1,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0], 
         arcana:       [0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0], 

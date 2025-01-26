@@ -15,13 +15,6 @@ const toggleAllFeats = document.querySelector("#show-all-feats");
 const togglePassives = document.querySelector("#show-passives");
 const featContainer = document.querySelector(".feat-container");
 
-const strengthValue = document.querySelector(".strength-value");
-const dexterityValue = document.querySelector(".dexterity-value");
-const constitutionValue = document.querySelector(".constitution-value");
-const intelligenceValue = document.querySelector(".intelligence-value");
-const wisdomValue = document.querySelector(".wisdom-value");
-const charismaValue = document.querySelector(".charisma-value");
-
 const acrobaticsIcon = document.querySelector(".acrobatics");
 const arcanaIcon = document.querySelector(".arcana");
 const athleticsIcon = document.querySelector(".athletics");
@@ -63,10 +56,12 @@ const main = () => {
     
     levelElement.textContent = currentLevel;
 
+    initializeAbilities();
+
     generateLevelFeats();
-    generateAbilityValues();
+    updateAbilityValues();
     generateSkillValues();
-}
+};
 
 /*##############################
 ||      EVENT LISTENERS       ||
@@ -75,7 +70,7 @@ arrowLeft.addEventListener("click", () => {
     if (Number(levelElement.textContent) > MIN_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) - 1;
         generateLevelFeats();
-        generateAbilityValues();
+        updateAbilityValues();
         generateSkillValues();
         localStorage['currentLevel'] = levelElement.textContent;
     }
@@ -85,7 +80,7 @@ arrowRight.addEventListener("click", () => {
     if (Number(levelElement.textContent) < MAX_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) + 1;
         generateLevelFeats();
-        generateAbilityValues();
+        updateAbilityValues();
         generateSkillValues();
         localStorage['currentLevel'] = levelElement.textContent;
     }
@@ -108,6 +103,47 @@ document.addEventListener("keyup", e => {
 /*##############################
 ||         FUNCTIONS          ||
 ##############################*/
+const initializeAbilities = () => {
+    let abilityNames = Object.keys(characterStats[0]);
+    for (ability in abilityNames) {
+        let abilityName = abilityNames[ability];
+        let abilityElement = document.createElement("div");
+        abilityElement.classList.add("ability");
+        abilityElement.classList.add(abilityName);
+
+        let abilityIcon = document.createElement("img");
+        abilityIcon.className = "ability-icon";
+        abilityIcon.src = characterStats[0][abilityName][1];
+        abilityIcon.title = abilityName.charAt(0).toUpperCase() + abilityName.slice(1).toLowerCase();
+
+        let abilityValue = document.createElement("div");
+        abilityValue.classList.add("ability-value");
+        abilityValue.id = abilityName;
+        abilityValue.textContent = "+0";
+
+        abilityElement.appendChild(abilityIcon);
+        abilityElement.appendChild(abilityValue);
+        abilityContainer.appendChild(abilityElement);
+    }
+};
+
+const updateAbilityValues = () => {
+    const abilities = document.querySelectorAll(".ability-value");
+    abilities.forEach(ability => {
+        let sum = 0;
+        for (let i = 0; i <= Number(levelElement.textContent); i++) {
+            sum += characterStats[0][ability.id][0][i]
+        }
+        
+        if (sum >= 0) ability.textContent = "+" + sum;
+        else ability.textContent = sum;
+
+        if (ability.textContent.endsWith(".5")) ability.textContent = ability.textContent.slice(0, -2) + "⇑";
+        if (characterStats[0][ability.id][0][Number(levelElement.textContent)] != 0) ability.style.color = "lightgreen";
+        else ability.style.color = "white";
+    });
+};
+
 const generateLevelFeats = () => {
     featContainer.textContent = "";
 
@@ -230,37 +266,7 @@ const generateFeat = item => {
     featContainer.appendChild(feat);
 };
 
-const generateAbilityValues = () => {
-    let strengthSum = 0;
-    let dexteritySum = 0;
-    let constitutionSum = 0;
-    let intelligenceSum = 0;
-    let wisdomSum = 0;
-    let charismaSum = 0;
-    for (let i = 0; i <= Number(levelElement.textContent); i++) {
-        strengthSum += characterStats[0]["strength"][i];
-        dexteritySum += characterStats[0]["dexterity"][i];
-        constitutionSum += characterStats[0]["constitution"][i];
-        intelligenceSum += characterStats[0]["intelligence"][i];
-        wisdomSum += characterStats[0]["wisdom"][i];
-        charismaSum += characterStats[0]["charisma"][i];
-    }
-    
-    updateAbilityValue(strengthSum, strengthValue, "strength");
-    updateAbilityValue(dexteritySum, dexterityValue, "dexterity");
-    updateAbilityValue(constitutionSum, constitutionValue, "constitution");
-    updateAbilityValue(intelligenceSum, intelligenceValue, "intelligence");
-    updateAbilityValue(wisdomSum, wisdomValue, "wisdom");
-    updateAbilityValue(charismaSum, charismaValue, "charisma");
-}
 
-const updateAbilityValue = (sum, element, name) => {
-    if (sum >= 0) element.textContent = "+" + sum;
-    else element.textContent = sum;
-    if (element.textContent.endsWith(".5")) element.textContent = element.textContent.slice(0, -2) + "⇑";
-    if (characterStats[0][name][Number(levelElement.textContent)] != 0) element.style.color = "lightgreen";
-    else element.style.color = "white";
-}
 
 const generateSkillValues = () => {
     let acrobaticsSum = 0;
@@ -314,7 +320,7 @@ const generateSkillValues = () => {
     updateSkillValue(stealthSum, stealthIcon, "stealth");
     updateSkillValue(survivalSum, survivalIcon, "survival");
     updateSkillValue(thieverySum, thieveryIcon, "thievery");
-}
+};
 
 const updateSkillValue = (sum, element, name) => {
     if (sum == 0) {
@@ -340,6 +346,11 @@ const updateSkillValue = (sum, element, name) => {
     } else {
         element.style.filter = oldFilter;
     }
-}
+};
+
+
+
+
+
 
 main();
