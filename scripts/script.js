@@ -323,4 +323,9 @@ const updateSkillValue = (sum, element, name) => {
     }
 }
 
+document.addEventListener("keyup", e => {
+    if (e.key == "ArrowLeft") arrowLeft.click();
+    else if (e.key == "ArrowRight") arrowRight.click();
+});
+
 main();
