@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-/* fonts: "playfair display" "bona nova sc" */
+@import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Todhri&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+/* fonts: "playfair display" "bona nova sc" "noto serif todhri" */
 
 * {
     margin: 0;
@@ -13,7 +13,6 @@ body {
     font-size: 16px;
     font-family: "playfair display";
     height: 100vh;
-    
 }
 
 a {
@@ -290,15 +289,32 @@ a {
         box-shadow: 0px 10px 0px grey;
     }
 
+    .feat_level_information {
+        position: absolute;
+        margin-top: 5px;
+        margin-left: 5px;
+        background-color: hsl(0, 0%, 0%, 0.2);
+        font-size: 1em;
+        font-family: "noto serif todhri";       
+        border-radius: 20px;
+        width: 30px;
+        height: 30px;
+        padding: 5px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .new-icon {
         position: absolute;
-        margin-left: 5px;
+        margin-top: 0px;
+        margin-left: 38px;
         height: 0px;
         filter: invert(39%) sepia(35%) saturate(1264%) hue-rotate(306deg) brightness(89%) contrast(86%);
     }
 
     .new-icon-img {
-        height: 50px;
+        height: 40px;
     }
 
     .feat-image {

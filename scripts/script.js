@@ -112,6 +112,38 @@ const generateFeat = item => {
     let feat = document.createElement("div");
     feat.className = "feat";
 
+    // Feat Theme
+    let type = item["type"];
+    if (type == "background") {
+        feat.style.backgroundColor = "#DFCFE6";
+        feat.style.boxShadow = "0px 10px 0px #A760A5";    
+    } else if (type == "ancestry") {
+        feat.style.backgroundColor = "#D2F0CD";
+        feat.style.boxShadow = "0px 10px 0px #5C9F8A";
+    } else if (type == "class") {
+        feat.style.backgroundColor = "#C6E3FF"; 
+        feat.style.boxShadow = "0px 10px 0px #6A6BBA";
+    } else if (type == "skill" || type == "general") {
+        feat.style.backgroundColor = "hsl(0, 0%, 87%)";
+        feat.style.boxShadow = "0px 10px 0px hsl(0, 0%, 50%)";
+    } else if (type == "archetype") {
+        feat.style.backgroundColor = "#FFE2A9";
+        feat.style.boxShadow = "0px 10px 0px #F08528";
+    } else { // Basic or Other
+        feat.style.backgroundColor = "#F7EAE0";
+        feat.style.boxShadow = "0px 10px 0px #AC7A77";
+    }
+    // feat.style.backgroundColor = "yellow";
+    // feat.style.boxShadow = "0px 10px 0px red";
+
+    // Feat Level and Level Acquired
+    let feat_level_information = document.createElement("div");
+    feat_level_information.className = "feat_level_information";
+    let feat_level_acquired = document.createElement("div");
+    feat_level_acquired.textContent = item["level_acquired"];
+    feat_level_information.appendChild(feat_level_acquired);
+
+    // Feat Icon
     let feat_image = document.createElement("div");
     feat_image.className = "feat-image";
     let feat_image_img = document.createElement("img");
@@ -125,6 +157,7 @@ const generateFeat = item => {
     }
     feat_image.appendChild(feat_image_img);
 
+    // Feat Title
     let feat_title = document.createElement("div");
     feat_title.className = "feat-title";
     let feat_name = document.createElement("div");
@@ -155,10 +188,12 @@ const generateFeat = item => {
     feat_title.appendChild(feat_name);
     feat_title.appendChild(feat_action);
 
+    // Feat Description
     let feat_description = document.createElement("div");
     feat_description.className = "feat-description";
     feat_description.textContent = item["description"]; 
 
+    // Feat New Indicator (When Past Feats Are Toggled)
     if (toggleAllFeats.checked && (item["level_acquired"] == Number(levelElement.textContent))) {
         let new_icon = document.createElement("div");
         new_icon.className = "new-icon";
@@ -169,6 +204,7 @@ const generateFeat = item => {
         feat.appendChild(new_icon);
     }
 
+    feat.appendChild(feat_level_information);
     feat.appendChild(feat_image);
     feat.appendChild(feat_title);
     feat.appendChild(feat_description);
