@@ -285,6 +285,12 @@ const generateFeat = item => {
         feat_action_img.src = "./images/pathfinder-icons/two-actions.png";
     } else if (action == "three") {
         feat_action_img.src = "./images/pathfinder-icons/three-actions.png";
+    } else if (action == "action-dnd") {
+        feat_action_img.src = "./images/dnd-icons/action-dnd.png";
+    } else if (action == "bonus-dnd") {
+        feat_action_img.src = "./images/dnd-icons/bonus-dnd.png";
+    } else if (action == "reaction-dnd") {
+        feat_action_img.src = "./images/dnd-icons/reaction-dnd.png";
     } else {
         feat_action_img.src = "";
     }

@@ -80,7 +80,7 @@ EXAMPLE TEMPLATE:
 */
 
 // SUPPORTED TYPES: basic, skill, general, class, ancestry, archetype, background
-// SUPPORTED ACTIONS: passive, reaction, free, one, two, three
+// SUPPORTED ACTIONS: passive, reaction, free, one, two, three, action-dnd, bonus-dnd, reaction-dnd
 // Displays on screen from bottom to top.
 const characterFeats = [
     // LEVEL 0
