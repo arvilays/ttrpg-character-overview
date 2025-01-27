@@ -41,10 +41,11 @@ const main = () => {
 
     initializeAbilities();
     initializeSkills();
+    initializeFeats();
 
-    generateLevelFeats();
     updateAbilities();
     updateSkills();
+    updateFeats();
 };
 
 /*##############################
@@ -53,9 +54,9 @@ const main = () => {
 arrowLeft.addEventListener("click", () => {
     if (Number(levelElement.textContent) > MIN_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) - 1;
-        generateLevelFeats();
         updateAbilities();
         updateSkills();
+        updateFeats();
         localStorage['currentLevel'] = levelElement.textContent;
     }
 });
@@ -63,19 +64,19 @@ arrowLeft.addEventListener("click", () => {
 arrowRight.addEventListener("click", () => {
     if (Number(levelElement.textContent) < MAX_LEVEL) {
         levelElement.textContent = Number(levelElement.textContent) + 1;
-        generateLevelFeats();
         updateAbilities();
         updateSkills();
+        updateFeats();
         localStorage['currentLevel'] = levelElement.textContent;
     }
 });
 
 toggleAllFeats.addEventListener("click", () => {
-    generateLevelFeats();
+    updateFeats();
 });
 
 togglePassives.addEventListener("click", () => {
-    generateLevelFeats();
+    updateFeats();
 });
 
 // Keyboard Controls
@@ -180,22 +181,35 @@ const updateSkills = () => {
     });
 };
 
-const generateLevelFeats = () => {
-    featContainer.textContent = "";
-
-    let levelFeats;
-    if (toggleAllFeats.checked) {
-        levelFeats = characterFeats.filter(item => item["level_acquired"] <= Number(levelElement.textContent)).reverse();
-    } else {
-        levelFeats = characterFeats.filter(item => item["level_acquired"] == Number(levelElement.textContent));
+const initializeFeats = () => {
+    for (feat in characterFeats) {
+        generateFeat(characterFeats[feat]);
     }
+}
 
-    if (!togglePassives.checked) {
-        levelFeats = levelFeats.filter(item => item["action"] != "passive");
-    }
+const updateFeats = () => {
+    let feats = document.querySelectorAll(".feat");
+    let selectedLevel = levelElement.textContent;
 
-    levelFeats.forEach(item => {
-        generateFeat(item);
+    feats.forEach(feat => {
+        let level_acquired = feat.querySelector(".level_acquired").textContent;
+        let action = feat.querySelector(".feat-action").firstChild.id;
+
+        if (toggleAllFeats.checked) {
+            if (Number(level_acquired) <= Number(selectedLevel)) feat.style.display = "grid";
+            else feat.style.display = "none";
+
+            if (Number(level_acquired) == Number(selectedLevel)) feat.querySelector(".new-icon").style.display = "revert";
+            else feat.querySelector(".new-icon").style.display = "none";
+        } else {
+            if (Number(level_acquired) == Number(selectedLevel)) feat.style.display = "grid";
+            else {
+                feat.style.display = "none";   
+            }
+            feat.querySelector(".new-icon").style.display = "none"; 
+        }
+
+        if (!togglePassives.checked && action == "passive") feat.style.display = "none";
     });
 };
 
@@ -224,13 +238,12 @@ const generateFeat = item => {
         feat.style.backgroundColor = "#F7EAE0";
         feat.style.boxShadow = "0px 10px 0px #AC7A77";
     }
-    // feat.style.backgroundColor = "yellow";
-    // feat.style.boxShadow = "0px 10px 0px red";
 
     // Feat Level and Level Acquired
     let feat_level_information = document.createElement("div");
     feat_level_information.className = "feat_level_information";
     let feat_level_acquired = document.createElement("div");
+    feat_level_acquired.className = "level_acquired";
     feat_level_acquired.textContent = item["level_acquired"];
     feat_level_information.appendChild(feat_level_acquired);
 
@@ -261,6 +274,7 @@ const generateFeat = item => {
     feat_action.className = "feat-action";
     let feat_action_img = document.createElement("img");
     let action = item["action"];
+    feat_action_img.id = item["action"];
     if (action == "reaction") {
         feat_action_img.src = "./images/pathfinder-icons/reaction.png";
     } else if (action == "free") {
@@ -284,31 +298,21 @@ const generateFeat = item => {
     feat_description.className = "feat-description";
     feat_description.textContent = item["description"]; 
 
-    // Feat New Indicator (When Past Feats Are Toggled)
-    if (toggleAllFeats.checked && (item["level_acquired"] == Number(levelElement.textContent))) {
-        let new_icon = document.createElement("div");
-        new_icon.className = "new-icon";
-        let new_icon_img = document.createElement("img");
-        new_icon_img.className = "new-icon-img";
-        new_icon_img.src = "./images/new-box.svg";
-        new_icon.appendChild(new_icon_img);
-        feat.appendChild(new_icon);
-    }
+    // Feat New Indicator
+    let new_icon = document.createElement("div");
+    new_icon.className = "new-icon";
+    new_icon.style.display = "none";
+    let new_icon_img = document.createElement("img");
+    new_icon_img.className = "new-icon-img";
+    new_icon_img.src = "./images/new-box.svg";
+    new_icon.appendChild(new_icon_img);
+    feat.appendChild(new_icon);
 
     feat.appendChild(feat_level_information);
     feat.appendChild(feat_image);
     feat.appendChild(feat_title);
     feat.appendChild(feat_description);
-    featContainer.appendChild(feat);
+    featContainer.insertBefore(feat, featContainer.firstChild);
 };
-
-
-
-
-
-
-
-
-
 
 main();
