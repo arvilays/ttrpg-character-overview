@@ -690,7 +690,7 @@ const characterFeats = [
         level: 10,
         level_acquired: 10,
         manually_chosen: true, 
-        description: "Adds two additional choices to Debilitating Strike: +2d6 precision damage or inflict off-guard.",
+        description: "Adds two additional choices to Debilitating Strike: +2d6 precision damage and inflict off-guard.",
         icon_url: "./images/feat-icons/precise-debilitations.webp",
         source_url: "https://2e.aonprd.com/Feats.aspx?ID=4963" },
 
