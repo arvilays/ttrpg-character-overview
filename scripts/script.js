@@ -80,7 +80,7 @@ togglePassives.addEventListener("click", () => {
 });
 
 // Keyboard Controls
-document.addEventListener("keyup", e => {
+document.addEventListener("keydown", e => {
     if (e.key == "ArrowLeft") arrowLeft.click();
     else if (e.key == "ArrowRight") arrowRight.click();
 });
