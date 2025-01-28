@@ -444,6 +444,24 @@ a {
 }
 
 /*##################
+||  FEAT CHOSEN   ||
+##################*/
+@media only screen and (min-width: 0px) {
+    .chosen-icon {
+        position: relative;
+        bottom: 38px;
+        left: 2px;
+
+        height: 0px;
+    }
+
+    .chosen-icon-img {
+        height: 35px;
+        opacity: 10%;
+    }
+}
+
+/*##################
 ||   FEAT ICON    ||
 ##################*/
 @media only screen and (min-width: 0px) {

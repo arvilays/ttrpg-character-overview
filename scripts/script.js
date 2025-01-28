@@ -242,6 +242,7 @@ const updateFeats = () => {
         if (filteredFeats.map(x => x.name).includes(feat.querySelector(".feat-name").textContent)) {
             if (feat.querySelector(".level_acquired").textContent == currentLevel && togglePreviousFeats.checked) feat.querySelector(".new-icon").style.display = "revert";
             else feat.querySelector(".new-icon").style.display = "none";
+
             feat.style.display = "grid";
             feat.style.opacity = "0%";
             filteredFeatsElements.push(feat);
@@ -360,11 +361,28 @@ const generateFeat = item => {
     new_icon.appendChild(new_icon_img);
     feat.appendChild(new_icon);
 
+    // Manually Chosen Indicator
+    
+    let manually_chosen = item["manually_chosen"];
+    if (manually_chosen) {
+        let chosen_icon = document.createElement("div");
+        chosen_icon.className = "chosen-icon";
+        chosen_icon.style.display = "revert";
+        let chosen_icon_img = document.createElement("img");
+        chosen_icon_img.className = "chosen-icon-img";
+        chosen_icon_img.src = "./images/check-circle-outline.svg";
+        chosen_icon.appendChild(chosen_icon_img);
+        feat.appendChild(chosen_icon);
+    }
+    
+
     feat.appendChild(feat_level_information);
     feat.appendChild(feat_image);
     feat.appendChild(feat_title);
     feat.appendChild(feat_description);
     featContainer.insertBefore(feat, featContainer.firstChild);
+
+    
 };
 
 main();
