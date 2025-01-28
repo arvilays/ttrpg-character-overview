@@ -11,7 +11,7 @@ const levelElement = document.querySelector(".character-level");
 const arrowLeft = document.querySelector(".arrow-left");
 const arrowRight = document.querySelector(".arrow-right");
 
-const toggleAllFeats = document.querySelector("#show-all-feats");
+const togglePreviousFeats = document.querySelector("#show-all-feats");
 const togglePassives = document.querySelector("#show-passives");
 const featContainer = document.querySelector(".feat-container");
 
@@ -24,9 +24,25 @@ const legendaryColor = "invert(93%) sepia(81%) saturate(3421%) hue-rotate(356deg
 const MIN_LEVEL = 0;
 const MAX_LEVEL = 20;
 
-const currentLevel = localStorage['currentLevel'] || 1;
+let currentLevel = Number(localStorage["currentLevel"]) || 1;
 
 const main = () => {
+    if (localStorage["showPreviousFeats"]) {
+        if (localStorage["showPreviousFeats"].charAt(0).toLowerCase() == "t") {
+            togglePreviousFeats.checked = true;
+        } else if (localStorage["showPreviousFeats"].charAt(0).toLowerCase() == "f") {
+            togglePreviousFeats.checked = false;
+        }
+    } else togglePreviousFeats.checked = false;
+
+    if (localStorage["showPassives"]) {
+        if (localStorage["showPassives"].charAt(0).toLowerCase() == "t") {
+            togglePassives.checked = true;
+        } else if (localStorage["showPassives"].charAt(0).toLowerCase() == "f") {
+            togglePassives.checked = false;
+        }
+    } else togglePassives.checked = true;
+    
     header.style.backgroundImage = "url(" + headerBackgroundImageURL + ")";
     characterImage.src = characterImageURL;
 
@@ -52,31 +68,52 @@ const main = () => {
 ||      EVENT LISTENERS       ||
 ##############################*/
 arrowLeft.addEventListener("click", () => {
-    if (Number(levelElement.textContent) > MIN_LEVEL) {
-        levelElement.textContent = Number(levelElement.textContent) - 1;
+    if (currentLevel > MIN_LEVEL) {
+        currentLevel--;
+        setTimeout(() => {
+            levelElement.style.color = "hsla(0, 0%, 100%, 0)";
+            setTimeout(() => {
+                levelElement.style.color = "white";
+                levelElement.textContent = currentLevel;
+            }, "100");
+        }, "20");
+
         updateAbilities();
         updateSkills();
         updateFeats();
-        localStorage['currentLevel'] = levelElement.textContent;
-    }
+    } else currentLevel = MIN_LEVEL;
+
+    localStorage.setItem("currentLevel", currentLevel);
 });
+
 
 arrowRight.addEventListener("click", () => {
-    if (Number(levelElement.textContent) < MAX_LEVEL) {
-        levelElement.textContent = Number(levelElement.textContent) + 1;
+    if (currentLevel < MAX_LEVEL) {
+        currentLevel++;
+        setTimeout(() => {
+            levelElement.style.color = "hsla(0, 0%, 100%, 0)";
+            setTimeout(() => {
+                levelElement.style.color = "white";
+                levelElement.textContent = currentLevel;
+            }, "100");
+        }, "20");
+
         updateAbilities();
         updateSkills();
         updateFeats();
-        localStorage['currentLevel'] = levelElement.textContent;
-    }
+    } else currentLevel = MAX_LEVEL;
+
+    localStorage.setItem("currentLevel", currentLevel);
 });
 
-toggleAllFeats.addEventListener("click", () => {
+togglePreviousFeats.addEventListener("click", () => {
     updateFeats();
+    localStorage.setItem("showPreviousFeats", togglePreviousFeats.checked);
 });
 
 togglePassives.addEventListener("click", () => {
     updateFeats();
+    localStorage.setItem("showPassives", togglePassives.checked);
 });
 
 // Keyboard Controls
@@ -116,7 +153,7 @@ const updateAbilities = () => {
     const abilities = document.querySelectorAll(".ability-value");
     abilities.forEach(ability => {
         let sum = 0;
-        for (let i = 0; i <= Number(levelElement.textContent); i++) {
+        for (let i = 0; i <= currentLevel; i++) {
             sum += characterStats[0][ability.id][0][i]
         }
         
@@ -124,7 +161,7 @@ const updateAbilities = () => {
         else ability.textContent = sum;
 
         if (ability.textContent.endsWith(".5")) ability.textContent = ability.textContent.slice(0, -2) + "⇑";
-        if (characterStats[0][ability.id][0][Number(levelElement.textContent)] != 0) ability.style.color = "lightgreen";
+        if (characterStats[0][ability.id][0][currentLevel] != 0) ability.style.color = "lightgreen";
         else ability.style.color = "white";
     });
 };
@@ -151,7 +188,7 @@ const updateSkills = () => {
     skills.forEach(skill => {
         let name = skill.id;
         let sum = 0;
-        for (let i = 0; i <= Number(levelElement.textContent); i++) {
+        for (let i = 0; i <= currentLevel; i++) {
             sum += characterStats[1][name][0][i]
         }
 
@@ -173,7 +210,7 @@ const updateSkills = () => {
         }
 
         let oldFilter = skill.style.filter;
-        if (characterStats[1][name][0][Number(levelElement.textContent)] > 0) {
+        if (characterStats[1][name][0][currentLevel] > 0) {
             skill.style.filter = oldFilter + " drop-shadow(0 0 10px rgb(255, 255, 255))";
         } else {
             skill.style.filter = oldFilter;
@@ -189,28 +226,37 @@ const initializeFeats = () => {
 
 const updateFeats = () => {
     let feats = document.querySelectorAll(".feat");
-    let selectedLevel = levelElement.textContent;
+    let filteredFeats = [];
+    var interval = 50; // In miliseconds
+    var promise = Promise.resolve();
 
+    // Filter for correct feats
+    if (togglePreviousFeats.checked) filteredFeats = characterFeats.filter(item => item.level_acquired <= currentLevel);
+    else filteredFeats = characterFeats.filter(item => item.level_acquired == currentLevel);
+
+    if (!togglePassives.checked) filteredFeats = filteredFeats.filter(item => item.action != "passive");
+
+    // Push correct feats into array
+    let filteredFeatsElements = [];
     feats.forEach(feat => {
-        let level_acquired = feat.querySelector(".level_acquired").textContent;
-        let action = feat.querySelector(".feat-action").firstChild.id;
-
-        if (toggleAllFeats.checked) {
-            if (Number(level_acquired) <= Number(selectedLevel)) feat.style.display = "grid";
-            else feat.style.display = "none";
-
-            if (Number(level_acquired) == Number(selectedLevel)) feat.querySelector(".new-icon").style.display = "revert";
+        if (filteredFeats.map(x => x.name).includes(feat.querySelector(".feat-name").textContent)) {
+            if (feat.querySelector(".level_acquired").textContent == currentLevel && togglePreviousFeats.checked) feat.querySelector(".new-icon").style.display = "revert";
             else feat.querySelector(".new-icon").style.display = "none";
-        } else {
-            if (Number(level_acquired) == Number(selectedLevel)) feat.style.display = "grid";
-            else {
-                feat.style.display = "none";   
-            }
-            feat.querySelector(".new-icon").style.display = "none"; 
-        }
-
-        if (!togglePassives.checked && action == "passive") feat.style.display = "none";
+            feat.style.display = "grid";
+            feat.style.opacity = "0%";
+            filteredFeatsElements.push(feat);
+        } else feat.style.display = "none";
     });
+
+    // Fade in each correct individual feats
+    filteredFeatsElements.forEach(feat => {
+        promise = promise.then(function () {
+            return new Promise(function (resolve) {
+                feat.style.opacity = "100%";
+                setTimeout(resolve, interval);
+            });
+        });
+    })
 };
 
 const generateFeat = item => {
