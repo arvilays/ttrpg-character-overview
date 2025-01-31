@@ -125,98 +125,182 @@ document.addEventListener("keydown", e => {
 /*##############################
 ||         FUNCTIONS          ||
 ##############################*/
-const initializeAbilities = () => {
-    let abilityNames = Object.keys(characterStats[0]);
-    for (ability in abilityNames) {
-        let abilityName = abilityNames[ability];
-        let abilityElement = document.createElement("div");
-        abilityElement.classList.add("ability");
-        abilityElement.classList.add(abilityName);
+const level = (function () {
+    let level = 1;
 
-        let abilityIcon = document.createElement("img");
-        abilityIcon.className = "ability-icon";
-        abilityIcon.src = characterStats[0][abilityName][1];
-        abilityIcon.title = abilityName.charAt(0).toUpperCase() + abilityName.slice(1).toLowerCase();
+    const levelElement = document.querySelector(".character-level");
+    const arrowLeft = document.querySelector(".arrow-left");
+    const arrowRight = document.querySelector(".arrow-right");
 
-        let abilityValue = document.createElement("div");
-        abilityValue.classList.add("ability-value");
-        abilityValue.id = abilityName;
-        abilityValue.textContent = "+0";
-
-        abilityElement.appendChild(abilityIcon);
-        abilityElement.appendChild(abilityValue);
-        abilityContainer.appendChild(abilityElement);
-    }
-};
-
-const updateAbilities = () => {
-    const abilities = document.querySelectorAll(".ability-value");
-    abilities.forEach(ability => {
-        let sum = 0;
-        for (let i = 0; i <= currentLevel; i++) {
-            sum += characterStats[0][ability.id][0][i]
-        }
-        
-        if (sum >= 0) ability.textContent = "+" + sum;
-        else ability.textContent = sum;
-
-        if (ability.textContent.endsWith(".5")) ability.textContent = ability.textContent.slice(0, -2) + "⇑";
-        if (characterStats[0][ability.id][0][currentLevel] != 0) ability.style.color = "lightgreen";
-        else ability.style.color = "white";
+    arrowLeft.addEventListener("click", () => { decreaseLevel(); });
+    arrowRight.addEventListener("click", () => { increaseLevel(); });
+    document.addEventListener("keydown", e => {
+        if (e.key == "ArrowLeft") decreaseLevel();
+        else if (e.key == "ArrowRight") increaseLevel();
     });
-};
 
-const initializeSkills = () => {
-    let skillNames = Object.keys(characterStats[1]);
-    for (skill in skillNames) {
-        let skillName = skillNames[skill];
-        let skillElement = document.createElement("div");
-        skillElement.classList.add("skill-icon");
-        skillElement.id = skillName;
+    events.subscribe("levelChange", _updateDisplay);
 
-        let skillIcon = document.createElement("img");
-        skillIcon.src = characterStats[1][skillName][1];
-        skillIcon.title = skillName.charAt(0).toUpperCase() + skillName.slice(1).toLowerCase();
+    function getLevel () { return level; };
+    function setLevel (newLevel) { //////////////////////////////// TEST THIS
+        level = newLevel;
+        events.trigger("levelChange", level);
+    };
+    function increaseLevel () { 
+        if (level < MAX_LEVEL) {
+            level++;
+            events.trigger("levelChange", level); 
+        }
+        console.log(level);
+    };
+    function decreaseLevel () { 
+        if (level > MIN_LEVEL) {
+            level--;
+            events.trigger("levelChange", level);
+        }
+        console.log(level);
+    };
 
-        skillElement.appendChild(skillIcon);
-        skillContainer.appendChild(skillElement);
+    function _updateDisplay() {
+        levelElement.textContent = level;
     }
-};
 
-const updateSkills = () => {
-    const skills = document.querySelectorAll(".skill-icon");
-    skills.forEach(skill => {
-        let name = skill.id;
-        let sum = 0;
-        for (let i = 0; i <= currentLevel; i++) {
-            sum += characterStats[1][name][0][i]
-        }
+    return { getLevel, setLevel, increaseLevel, decreaseLevel };
+})();
 
-        if (sum == 0) {
-            skill.style.filter = untrainedColor;
-            skill.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Untrained)";
-        } else if (sum == 1) {
-            skill.style.filter = trainedColor;
-            skill.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Trained)";
-        } else if (sum == 2) {
-            skill.style.filter = expertColor;
-            skill.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Expert)";
-        } else if (sum == 3) {
-            skill.style.filter = masterColor;
-            skill.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Master)";
-        } else if (sum == 4) {
-            skill.style.filter = legendaryColor;
-            skill.firstChild.title = name.charAt(0).toUpperCase() + name.slice(1) + " (Legendary)";
-        }
+const abilities = (function () {
+    let names = Object.keys(characterStats[0]);
 
-        let oldFilter = skill.style.filter;
-        if (characterStats[1][name][0][currentLevel] > 0) {
-            skill.style.filter = oldFilter + " drop-shadow(0 0 10px rgb(255, 255, 255))";
-        } else {
-            skill.style.filter = oldFilter;
+    const container = document.querySelector(".ability-container");
+
+    events.subscribe("levelChange", _update);
+    _init();
+
+    function _init () {
+        for (ability in names) {
+            let name = names[ability];
+
+            // Create single ability container
+            let element = document.createElement("div");
+            element.className = "ability";
+
+            // Create ability icon element
+            let icon = document.createElement("img");
+            icon.className = "ability-icon";
+            icon.src = characterStats[0][name][1];
+            icon.title = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
+            // Create ability value element
+            let value = document.createElement("div");
+            value.className = "ability-value";
+            value.id = name;
+            value.textContent = "+0";
+
+            element.appendChild(icon);
+            element.appendChild(value);
+            container.appendChild(element);
         }
-    });
-};
+    };
+    function _update () {
+        const values = container.querySelectorAll(".ability-value");
+        values.forEach(value => {
+            let sum = 0;
+            for (let i = 0; i <= level.getLevel(); i++) {
+                sum += characterStats[0][value.id][0][i];
+            }
+
+            let string = "";
+            // If value is 0 or greater, add a plus sign
+            if (sum >= 0) string = "+";
+            string += sum;
+
+            // If value has a .5, add arrow symbol to end
+            if (string.endsWith(".5")) string = string.slice(0, -2) + "⇑";
+
+            value.textContent = string;
+
+            // If current level is when stat changes, change color
+            if (characterStats[0][value.id][0][level.getLevel()] != 0) value.style.color = "lightgreen";
+            else value.style.color = "white";
+        })
+    };
+})();
+
+const skills = (function () {
+    let names = Object.keys(characterStats[1]);
+
+    const untrainedColor = "invert(4%) sepia(96%) saturate(18%) hue-rotate(283deg) brightness(105%) contrast(102%)"; // #FFFFFF
+    const trainedColor = "invert(92%) sepia(93%) saturate(2382%) hue-rotate(230deg) brightness(250%) contrast(101%)"; // #171f69
+    const expertColor = "invert(91%) sepia(42%) saturate(5899%) hue-rotate(273deg) brightness(200%) contrast(123%)"; // #3a005c
+    const masterColor = "invert(78%) sepia(81%) saturate(1206%) hue-rotate(23deg) brightness(200%) contrast(101%)"; // #664400
+    const legendaryColor = "invert(93%) sepia(81%) saturate(3421%) hue-rotate(356deg) brightness(200%) contrast(115%)"; // #5c0000
+
+    const container = document.querySelector(".skill-container");
+
+    events.subscribe("levelChanged", _update);
+    _init();
+
+    function _init() {
+        for (skill in names) {
+            let name = names[skill];
+
+            // Create single skill container
+            let element = document.createElement("div");
+            element.className = "skill";
+
+            // Create skill icon element
+            let icon = document.createElement("img");
+            icon.className = "skill-icon";
+            icon.id = name;
+            icon.src = characterStats[1][name][1];
+            icon.title = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
+            element.appendChild(icon);
+            container.appendChild(element);
+        }
+    }
+    function _update() {
+        const skills = container.querySelectorAll(".skill-icon");
+        skills.forEach(value => {
+            let name = value.id;
+            let title = name.charAt(0).toUpperCase() + name.slice(1);
+            let sum = 0;
+            for (let i = 0; i <= level.getLevel(); i++) {
+                sum += characterStats[1][name][0][i];
+            }
+
+            // Set color and title depending on skill level
+            if (sum == 0) {
+                value.style.filter = untrainedColor;
+                value.title = title + " (Untrained)";
+            } else if (sum == 1) {
+                value.style.filter = trainedColor;
+                value.title = title + " (Trained)";
+            } else if (sum == 2) {
+                value.style.filter = expertColor;
+                value.title = title + " (Expert)";
+            } else if (sum == 3) {
+                value.style.filter = masterColor;
+                value.title = title + " (Master)";
+            } else if (sum == 4) {
+                value.style.filter = legendaryColor;
+                value.title = title + " (Legendary)";
+            }
+
+            // If current level is when skill changes, add glow
+            let oldFilter = value.style.filter;
+            if (characterStats[1][name][0][level.getLevel()] > 0) {
+                value.style.filter = oldFilter + "drop-shadow(0 0 10px rgb(255, 255, 255))";
+            }
+        })
+    }
+})();
+
+const feats = (function () {
+
+})();
+
+
 
 const initializeFeats = () => {
     for (feat in characterFeats) {
@@ -362,7 +446,6 @@ const generateFeat = item => {
     feat.appendChild(new_icon);
 
     // Manually Chosen Indicator
-    
     let manually_chosen = item["manually_chosen"];
     if (manually_chosen) {
         let chosen_icon = document.createElement("div");

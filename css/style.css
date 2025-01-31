@@ -1,3 +1,4 @@
+@import url("./reset.css");
 @import url('https://fonts.googleapis.com/css2?family=Bona+Nova+SC:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Todhri&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 /* fonts: "playfair display" "bona nova sc" "noto serif todhri" */
 
@@ -174,11 +175,11 @@ a {
         box-shadow: 0px 0px 10px white;
     }
 
-    .skill-icon {
+    .skill {
         transition: all 0.5s ease-out;
     }
 
-    .skill-icon > img {
+    .skill-icon {
         filter: invert(96%) sepia(96%) saturate(18%) hue-rotate(283deg) brightness(105%) contrast(102%);
         width: 50px;
     }
