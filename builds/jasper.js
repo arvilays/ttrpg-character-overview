@@ -91,7 +91,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0,
         manually_chosen: false, 
-        description: "Before you can use Aid, spend an action preparing to help an ally by stating how you'll do it. Once the condition is met, roll relevant check. If critical success, grant +2 to ally's check (+3 if you are a master at check, +4 if legendary). If success, grant +1 to ally's check. If critical failure, grant -1 to ally's check.", 
+        description: "Before you can use Aid, spend an action preparing to help an ally by stating how you'll do it. Once the condition is met, grant a bonus to your ally's checks.", 
         icon_url: "./images/feat-icons/aid.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2292&Redirected=1" },
     
@@ -102,7 +102,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "Ask a question and the DM will choose a skill check. If critical success, the GM answers truthfully and provides additional information. If success, the GM answers truthfully. On critical failure, the GM answers falsely or gives no answer.", 
+        description: "Ask a question and the DM will choose a skill check. The DM will answer truthfully depending on success.", 
         icon_url: "./images/feat-icons/recall-knowledge.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2367" },
     
@@ -135,7 +135,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "If you are within melee reach of a target, attempt a Deception check against your target's Perception DC. If critical success, target is off-guard to your melee attacks until the end of your next turn. If success, target is off-guard to your next melee attack before the end of your turn. If critical failure, you are off-guard against the target's melee attacks until the end of your next turn.", 
+        description: "Inflicts off-guard on target. Targets Perception DC.", 
         icon_url: "./images/feat-icons/feint.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2390" },
 
@@ -146,7 +146,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "With one hand free and target is no more than 1 size larger than you, attempt an Athletics check against the target's Fortitude DC. On critical success, target is restrained until the end of your turn unless your move. On success, target is grabbed until the end of your turn unless you move. On failure, you fail to grab your target and all grabbing conditions end. On critical failure, the target can grab you or force you to go prone.", 
+        description: "Grab a target. If critical success, restrain them. Targets Fortitude DC.", 
         icon_url: "./images/feat-icons/grapple.png",
         source_url: "https://2e.aonprd.com/Traits.aspx?ID=619" },
 
@@ -157,7 +157,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "If you have one hand free, attempt an Athletics check against the target's Fortitude DC. On critical success, move the target up to 10ft within reach. On success, move the target up to 5ft within reach. On critical failure, the target can move you up to 5ft.", 
+        description: "Move a target up to 5ft within reach. 10ft if critical success. Targets Fortitude DC.", 
         icon_url: "./images/feat-icons/reposition.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2379" },
 
@@ -168,7 +168,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "If you have one hand free and target is no more than 1 size larger than you, attempt an Athletics check against your target's Fortitude DC. On critical success, push target up to 10ft away from you and you can Stride after it. On success, push target up to 5ft and you can Stride after it. On critical failure, you fall prone.", 
+        description: "Push an enemy up to 5ft away from you. 10ft if critical success. You can also Stride after them. Targets Fortitude DC.", 
         icon_url: "./images/feat-icons/shove.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2380" },
 
@@ -179,7 +179,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "With one hand free, attempt an Athletics check against a target's Reflex DC. On critical success, the target's weapon falls to the ground. On success, add +2 bonus to future Disarms and the target takes -2 penalty to attacks with the item. The target can change their grip to reset bonuses and penalties. On critical failure, you become off-guard.", 
+        description: "Cause the enemy to drop their weapon. Success increases with each attempt. Targets Reflex DC.", 
         icon_url: "./images/feat-icons/disarm.webp",
         source_url: "https://2e.aonprd.com/Traits.aspx?ID=577" },
 
@@ -190,7 +190,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "If you have one hand free and the target is no more than 1 size larger than you, attempt an Athletics check against the target's Reflex DC. If critical success, the target falls prone and takes 1d6 bludgeoning damage. If success, target falls prone. If critical failure, you fall prone.", 
+        description: "Cause the enemy to fall prone. Targets Reflex DC.", 
         icon_url: "./images/feat-icons/trip.gif",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2382" },
 
@@ -201,7 +201,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "Attempt to move through the space of one enemy by attempting an Acrobatics Check against the enemy's Reflex DC. If success, you move through the enemy's space, treating the squares as difficult terrain.", 
+        description: "Move through an enemy's space. The enemy's space is treated as difficult terrain. Targets Reflex DC.", 
         icon_url: "./images/feat-icons/tumble-through.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2370" },
 
@@ -212,7 +212,7 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "Attempt an Intimidation check against an enemy's Will DC. -4 penalty if there's a language barrier. On critical success, target becomes frightened 2. On success, target becomes frightened 1. Target is immune to your Demoralize for 10min.", 
+        description: "Inflicts frightened on enemy. Targets Will DC.", 
         icon_url: "./images/feat-icons/demoralize.png",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2395" },
 
