@@ -125,6 +125,10 @@ document.addEventListener("keydown", e => {
 /*##############################
 ||         FUNCTIONS          ||
 ##############################*/
+const character = (function () {
+
+})();
+
 const level = (function () {
     let level = 1;
 
@@ -297,175 +301,182 @@ const skills = (function () {
 })();
 
 const feats = (function () {
+    let feats = characterFeats;
 
+    const container = document.querySelector(".feat-container");
+
+    _init();
+
+    function _init() {
+        for (feat in feats) {
+            _createFeat(feats[feat]);
+        }
+    };
+    function _createFeat(featData) {
+        let feat = document.createElement("div");
+        feat.className = "feat";
+
+        // Feat Theme
+        let type = featData["type"];
+        if (type == "background") {
+            feat.style.backgroundColor = "#DFCFE6";
+            feat.style.boxShadow = "0px 10px 0px #A760A5";
+        } else if (type == "ancestry") {
+            feat.style.backgroundColor = "#D2F0CD";
+            feat.style.boxShadow = "0px 10px 0px #5C9F8A";
+        } else if (type == "class") {
+            feat.style.backgroundColor = "#C6E3FF";
+            feat.style.boxShadow = "0px 10px 0px #6A6BBA";
+        } else if (type == "skill" || type == "general") {
+            feat.style.backgroundColor = "hsl(0, 0%, 87%)";
+            feat.style.boxShadow = "0px 10px 0px hsl(0, 0%, 50%)";
+        } else if (type == "archetype") {
+            feat.style.backgroundColor = "#FFE2A9";
+            feat.style.boxShadow = "0px 10px 0px #F08528";
+        } else { // Basic or Other
+            feat.style.backgroundColor = "#F7EAE0";
+            feat.style.boxShadow = "0px 10px 0px #AC7A77";
+        }
+
+        // Feat Level Acquired
+        let feat_level_acquired = document.createElement("div");
+        feat_level_acquired.className = "feat-level-acquired";
+        feat_level_acquired.textContent = featData["level_acquired"];
+        
+        // Feat Icon
+        let feat_icon = document.createElement("div");
+        feat_icon.className = "feat-icon";
+        let feat_icon_image = document.createElement("img");
+        feat_icon_image.className = "feat-icon-image";
+        let icon_url = featData["icon_url"];
+        if (icon_url == "") {
+            feat_icon_image.src = "./images/blank.svg";
+        } else {
+            feat_icon_image.src = featData["icon_url"];
+        }
+        feat_icon_image.style.border = "4px double black";
+        feat_icon_image.style.borderRadius = "20px";
+        feat_icon.appendChild(feat_icon_image);
+
+        // Feat Title
+        let feat_title = document.createElement("div");
+        feat_title.className = "feat-title";
+        let feat_name = document.createElement("div");
+        feat_name.className = "feat-name";
+        let feat_name_a = document.createElement("a");
+        feat_name_a.textContent = featData["name"];
+        feat_name_a.href = featData["source_url"];
+        feat_name_a.target = "_blank"; // Opens link in new tab
+        let feat_action = document.createElement("div");
+        feat_action.className = "feat-action";
+        let feat_action_icon = document.createElement("img");
+        feat_action_icon.className = "feat-action-icon";
+        let action = featData["action"];
+        feat_action_icon.id = featData["action"];
+        if (action == "reaction") {
+            feat_action_icon.src = "./images/pathfinder-icons/reaction.png";
+        } else if (action == "free") {
+            feat_action_icon.src = "./images/pathfinder-icons/free-action.png";
+        } else if (action == "one") {
+            feat_action_icon.src = "./images/pathfinder-icons/one-action.png";
+        } else if (action == "two") {
+            feat_action_icon.src = "./images/pathfinder-icons/two-actions.png";
+        } else if (action == "three") {
+            feat_action_icon.src = "./images/pathfinder-icons/three-actions.png";
+        } else if (action == "action-dnd") {
+            feat_action_icon.src = "./images/dnd-icons/action-dnd.png";
+        } else if (action == "bonus-dnd") {
+            feat_action_icon.src = "./images/dnd-icons/bonus-dnd.png";
+        } else if (action == "reaction-dnd") {
+            feat_action_icon.src = "./images/dnd-icons/reaction-dnd.png";
+        } else {
+            feat_action_icon.src = "";
+        }
+        feat_name.appendChild(feat_name_a);
+        feat_action.appendChild(feat_action_icon);
+        feat_title.appendChild(feat_name);
+        feat_title.appendChild(feat_action);
+
+        // Feat Description
+        let feat_description = document.createElement("div");
+        feat_description.className = "feat-description";
+        feat_description.textContent = featData["description"];
+
+        // Feat New Indicator
+        let feat_new_icon = document.createElement("div");
+        feat_new_icon.className = "feat-new-icon";
+        feat_new_icon.style.display = "none";
+        let feat_new_icon_image = document.createElement("img");
+        feat_new_icon_image.className = "feat-new-icon-img";
+        feat_new_icon_image.src = "./images/new-box.svg";
+        feat_new_icon.appendChild(feat_new_icon_image);
+        
+        // Manually Chosen Indicator
+        let feat_manually_chosen = document.createElement("div");
+        feat_manually_chosen.className = "feat-manually-chosen";
+        feat_manually_chosen.style.display = "revert";
+        let feat_manually_chosen_image = document.createElement("img");
+        feat_manually_chosen_image.className = "feat-manually-chosen-image";
+        feat_manually_chosen_image.src = "./images/check-circle-outline.svg";
+        feat_manually_chosen.appendChild(feat_manually_chosen_image);
+        let manually_chosen = featData["manually_chosen"];
+        if (manually_chosen) feat_manually_chosen.style.display = "visible";
+        else feat_manually_chosen.style.display = "none";
+
+        feat.appendChild(feat_new_icon);
+        feat.appendChild(feat_manually_chosen);
+        feat.appendChild(feat_level_information);
+        feat.appendChild(feat_icon);
+        feat.appendChild(feat_title);
+        feat.appendChild(feat_description);
+        container.insertBefore(feat, featContainer.firstChild);
+    };
+    function _updateFeats() {
+        let feats = container.querySelectorAll(".feat");
+        
+        // Filter for correct feats /////////////////////////////////////////////////////////////////////// separate out later
+        let filteredFeats = [];
+        if (togglePreviousFeats.checked) filteredFeats = characterFeats.filter(item => item.level_acquired <= currentLevel);
+        else filteredFeats = characterFeats.filter(item => item.level_acquired == currentLevel);
+
+        if (!togglePassives.checked) filteredFeats = filteredFeats.filter(item => item.action != "passive");
+
+        // Push correct feats into array
+        let filteredFeatsElements = [];
+        feats.forEach(feat => {
+            if (filteredFeats.map(x => x.name).includes(feat.querySelector(".feat-name").textContent)) {
+                if (feat.querySelector(".level_acquired").textContent == currentLevel && togglePreviousFeats.checked) feat.querySelector(".new-icon").style.display = "revert";
+                else feat.querySelector(".new-icon").style.display = "none";
+
+                feat.style.display = "grid";
+                feat.style.opacity = "0%";
+                filteredFeatsElements.push(feat);
+            } else feat.style.display = "none";
+        });
+
+        // Fade in each correct individual feats
+        let interval = 50; // In miliseconds
+        let promise = Promise.resolve();
+        filteredFeatsElements.forEach(feat => {
+            promise = promise.then(function () {
+                return new Promise(function (resolve) {
+                    feat.style.opacity = "100%";
+                    setTimeout(resolve, interval);
+                });
+            });
+        })
+    };
 })();
 
-
-
-const initializeFeats = () => {
-    for (feat in characterFeats) {
-        generateFeat(characterFeats[feat]);
-    }
-}
-
-const updateFeats = () => {
-    let feats = document.querySelectorAll(".feat");
-    let filteredFeats = [];
-    var interval = 50; // In miliseconds
-    var promise = Promise.resolve();
-
-    // Filter for correct feats
-    if (togglePreviousFeats.checked) filteredFeats = characterFeats.filter(item => item.level_acquired <= currentLevel);
-    else filteredFeats = characterFeats.filter(item => item.level_acquired == currentLevel);
-
-    if (!togglePassives.checked) filteredFeats = filteredFeats.filter(item => item.action != "passive");
-
-    // Push correct feats into array
-    let filteredFeatsElements = [];
-    feats.forEach(feat => {
-        if (filteredFeats.map(x => x.name).includes(feat.querySelector(".feat-name").textContent)) {
-            if (feat.querySelector(".level_acquired").textContent == currentLevel && togglePreviousFeats.checked) feat.querySelector(".new-icon").style.display = "revert";
-            else feat.querySelector(".new-icon").style.display = "none";
-
-            feat.style.display = "grid";
-            feat.style.opacity = "0%";
-            filteredFeatsElements.push(feat);
-        } else feat.style.display = "none";
-    });
-
-    // Fade in each correct individual feats
-    filteredFeatsElements.forEach(feat => {
-        promise = promise.then(function () {
-            return new Promise(function (resolve) {
-                feat.style.opacity = "100%";
-                setTimeout(resolve, interval);
-            });
-        });
-    })
-};
-
-const generateFeat = item => {
-    let feat = document.createElement("div");
-    feat.className = "feat";
-
-    // Feat Theme
-    let type = item["type"];
-    if (type == "background") {
-        feat.style.backgroundColor = "#DFCFE6";
-        feat.style.boxShadow = "0px 10px 0px #A760A5";    
-    } else if (type == "ancestry") {
-        feat.style.backgroundColor = "#D2F0CD";
-        feat.style.boxShadow = "0px 10px 0px #5C9F8A";
-    } else if (type == "class") {
-        feat.style.backgroundColor = "#C6E3FF"; 
-        feat.style.boxShadow = "0px 10px 0px #6A6BBA";
-    } else if (type == "skill" || type == "general") {
-        feat.style.backgroundColor = "hsl(0, 0%, 87%)";
-        feat.style.boxShadow = "0px 10px 0px hsl(0, 0%, 50%)";
-    } else if (type == "archetype") {
-        feat.style.backgroundColor = "#FFE2A9";
-        feat.style.boxShadow = "0px 10px 0px #F08528";
-    } else { // Basic or Other
-        feat.style.backgroundColor = "#F7EAE0";
-        feat.style.boxShadow = "0px 10px 0px #AC7A77";
-    }
-
-    // Feat Level and Level Acquired
-    let feat_level_information = document.createElement("div");
-    feat_level_information.className = "feat_level_information";
-    let feat_level_acquired = document.createElement("div");
-    feat_level_acquired.className = "level_acquired";
-    feat_level_acquired.textContent = item["level_acquired"];
-    feat_level_information.appendChild(feat_level_acquired);
-
-    // Feat Icon
-    let feat_image = document.createElement("div");
-    feat_image.className = "feat-image";
-    let feat_image_img = document.createElement("img");
-    let icon_url = item["icon_url"];
-    if (icon_url == "") {
-        feat_image_img.src = "./images/blank.svg"; 
-    } else {
-        feat_image_img.src = item["icon_url"];
-        feat_image_img.style.border = "4px double black";
-        feat_image_img.style.borderRadius = "20px";
-    }
-    feat_image.appendChild(feat_image_img);
-
-    // Feat Title
-    let feat_title = document.createElement("div");
-    feat_title.className = "feat-title";
-    let feat_name = document.createElement("div");
-    feat_name.className = "feat-name";
-    let feat_name_a = document.createElement("a");
-    feat_name_a.textContent = item["name"] 
-    feat_name_a.href = item["source_url"]; 
-    feat_name_a.target = "_blank"
-    let feat_action = document.createElement("div");
-    feat_action.className = "feat-action";
-    let feat_action_img = document.createElement("img");
-    let action = item["action"];
-    feat_action_img.id = item["action"];
-    if (action == "reaction") {
-        feat_action_img.src = "./images/pathfinder-icons/reaction.png";
-    } else if (action == "free") {
-        feat_action_img.src = "./images/pathfinder-icons/free-action.png";
-    } else if (action == "one") {
-        feat_action_img.src = "./images/pathfinder-icons/one-action.png";
-    } else if (action == "two") {
-        feat_action_img.src = "./images/pathfinder-icons/two-actions.png";
-    } else if (action == "three") {
-        feat_action_img.src = "./images/pathfinder-icons/three-actions.png";
-    } else if (action == "action-dnd") {
-        feat_action_img.src = "./images/dnd-icons/action-dnd.png";
-    } else if (action == "bonus-dnd") {
-        feat_action_img.src = "./images/dnd-icons/bonus-dnd.png";
-    } else if (action == "reaction-dnd") {
-        feat_action_img.src = "./images/dnd-icons/reaction-dnd.png";
-    } else {
-        feat_action_img.src = "";
-    }
-    feat_name.appendChild(feat_name_a);
-    feat_action.appendChild(feat_action_img);
-    feat_title.appendChild(feat_name);
-    feat_title.appendChild(feat_action);
-
-    // Feat Description
-    let feat_description = document.createElement("div");
-    feat_description.className = "feat-description";
-    feat_description.textContent = item["description"]; 
-
-    // Feat New Indicator
-    let new_icon = document.createElement("div");
-    new_icon.className = "new-icon";
-    new_icon.style.display = "none";
-    let new_icon_img = document.createElement("img");
-    new_icon_img.className = "new-icon-img";
-    new_icon_img.src = "./images/new-box.svg";
-    new_icon.appendChild(new_icon_img);
-    feat.appendChild(new_icon);
-
-    // Manually Chosen Indicator
-    let manually_chosen = item["manually_chosen"];
-    if (manually_chosen) {
-        let chosen_icon = document.createElement("div");
-        chosen_icon.className = "chosen-icon";
-        chosen_icon.style.display = "revert";
-        let chosen_icon_img = document.createElement("img");
-        chosen_icon_img.className = "chosen-icon-img";
-        chosen_icon_img.src = "./images/check-circle-outline.svg";
-        chosen_icon.appendChild(chosen_icon_img);
-        feat.appendChild(chosen_icon);
-    }
-    
-
-    feat.appendChild(feat_level_information);
-    feat.appendChild(feat_image);
-    feat.appendChild(feat_title);
-    feat.appendChild(feat_description);
-    featContainer.insertBefore(feat, featContainer.firstChild);
-
-    
-};
-
 main();
+
+/*
+TODO:
+create character module that deals with all the external data
+fix updateFeats
+    separate out the filters
+    simplify function
+
+
+
+*/
