@@ -204,6 +204,7 @@ const characterFeats = [
         description: "Cause the enemy to drop their weapon. Success increases on future attempts unless the enemy adjusts their grip. Targets Reflex DC.",
         icon_url: "./images/feat-icons/disarm.webp",
         source_url: "https://2e.aonprd.com/Actions.aspx?ID=2383"
+    },
 
     { name: "Demoralize", 
         id: "demoralize",
