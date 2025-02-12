@@ -3,7 +3,7 @@ const characterAncestry = "Ratfolk";
 const characterBackground = "Acrobat";
 const characterClass = "Rogue (Thief)";
 
-const pathbuilderURL = "https://pathbuilder2e.com/launch.html?build=1005091";
+const pathbuilderURL = "https://pathbuilder2e.com/launch.html?build=1025625";
 const characterImageURL = "./images/jasper.webp";
 
 const headerBackgroundImageURL = "./images/fantasy-background.png";
