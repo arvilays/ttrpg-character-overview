@@ -339,16 +339,16 @@ const characterFeats = [
             icon_url: "./images/feat-icons/acrobat-dedication.png",
             source_url: "https://2e.aonprd.com/Archetypes.aspx?ID=236" },
 
-    { name: "Underhanded Assault",
-        id: "underhanded-assault",
-        type: "class", 
-        action: "two",
-        level: 2,
-        level_acquired: 2,
-        manually_chosen: true, 
-        description: "Sneak to an enemy adjacent to an ally. Roll stealth check. If success, melee Strike that enemy.",
-        icon_url: "./images/feat-icons/underhanded-assault.png",
-        source_url: "https://2e.aonprd.com/Feats.aspx?ID=4929" },
+    { name: "Quick Draw",
+            id: "quick-draw",
+            type: "class", 
+            action: "one",
+            level: 2,
+            level_acquired: 2,
+            manually_chosen: true, 
+            description: "Draw a weapon, then Strike with that weapon.",
+            icon_url: "./images/feat-icons/quick-draw.gif",
+            source_url: "https://2e.aonprd.com/Feats.aspx?ID=4869" },
 
     
     
