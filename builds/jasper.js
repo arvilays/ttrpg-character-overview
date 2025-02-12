@@ -201,9 +201,9 @@ const characterFeats = [
         level: 0, 
         level_acquired: 0, 
         manually_chosen: false, 
-        description: "Move through an enemy's space. The enemy's space is treated as difficult terrain. Targets Reflex DC.", 
-        icon_url: "./images/feat-icons/tumble-through.webp",
-        source_url: "https://2e.aonprd.com/Actions.aspx?ID=2370" },
+        description: "Cause the enemy to drop their weapon. Success increases on future attempts unless the enemy adjusts their grip. Targets Reflex DC.",
+        icon_url: "./images/feat-icons/disarm.webp",
+        source_url: "https://2e.aonprd.com/Actions.aspx?ID=2383"
 
     { name: "Demoralize", 
         id: "demoralize",
