@@ -200,9 +200,9 @@ const characterFeats = [
         level: 0,
         level_acquired: 0,
         manually_chosen: false,
-        description: "Cause the enemy to drop their weapon. Success increases with each attempt. Targets Reflex DC.",
+        description: "Cause the enemy to drop their weapon. Success increases on future attempts unless the enemy adjusts their grip. Targets Reflex DC.",
         icon_url: "./images/feat-icons/disarm.webp",
-        source_url: "https://2e.aonprd.com/Traits.aspx?ID=577"
+        source_url: "https://2e.aonprd.com/Actions.aspx?ID=2383"
     },
 
     {
